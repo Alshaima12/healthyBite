@@ -3,7 +3,7 @@ import { useDispatch } from 'react-redux';
 import { addToCart } from '../slices/cartSlice';
 import useRequireAuth from '../hooks/useRequireAuth';
 
-import useRequireAuth from '../hooks/useRequireAuth';
+
 import salad from "../images/salad-illustration.png";
 import meal1 from "../images/meal1.png";
 import meal2 from "../images/meal2.png";
