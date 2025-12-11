@@ -13,6 +13,8 @@ function NavbarComponent() {
     state.cart.items.reduce((sum, it) => sum + it.qty, 0)
   );
 
+  const normalizedPath = pathname.endsWith('/') && pathname.length > 1 ? pathname.slice(0, -1) : pathname;
+
   const getLinks = () => {
     if (!user) {
       return [
@@ -22,7 +24,7 @@ function NavbarComponent() {
       ];
     }
 
-    switch (pathname) {
+    switch (normalizedPath) {
       case '/welcome':
         return [
           { label: 'Menu', to: '/menu' },
