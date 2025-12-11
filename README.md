@@ -6,22 +6,12 @@ how to use:
    - cd healthyBite
 
 2. Frontend (example with npm)
-   - cd frontend
-   - cp .env.example .env
+   - cd client
    - npm install
-   - npm run dev
+   - npm start
    - Open http://localhost:3000
 
-3. Backend (example with Python/FastAPI or Node)
-   - cd backend
-   - cp .env.example .env
-   - For Python:
-     - python -m venv venv
-     - source venv/bin/activate (macOS/Linux) or venv\Scripts\activate (Windows)
-     - pip install -r requirements.txt
-     - alembic upgrade head  # if migrations are used
-     - uvicorn app.main:app --reload --host 0.0.0.0 --port 8000
-   - Or for Node:
+3. Backend
+   - cd server
      - npm install
-     - npm run migrate
      - npm run dev
