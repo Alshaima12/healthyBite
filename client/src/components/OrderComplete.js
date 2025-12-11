@@ -13,12 +13,12 @@ function OrderComplete() {
   const [loadingLocation, setLoadingLocation] = useState(true);
 
   const restaurantCoords = {
-    lat: 23.575195234819986,
-    lng: 58.42170222599534
+    lat: 23.589792255986705,
+    lng: 58.38499049993414
   };
 
   const restaurantLocation =
-    "https://maps.google.com/maps?q=23.575195234819986,58.42170222599534&hl=es;&output=embed";
+    "https://maps.google.com/maps?q=23.589792255986705,58.38499049993414&hl=es;&output=embed";
 
   // Calculate distance using Haversine formula
   const calculateDistance = (lat1, lon1, lat2, lon2) => {
