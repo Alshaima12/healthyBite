@@ -13,7 +13,6 @@ import Cart from './components/Cart';
 import OrderComplete from './components/OrderComplete';
 import Profile from './components/Profile';
 import OrderReceipt from './components/OrderReceipt';
-import "index.css"
 
 function App() {
   return (
