@@ -42,7 +42,7 @@ function NavbarComponent() {
           </NavItem>
           <NavItem>
             <Link to="/signup" className={classFor('/signup')}>
-              Sing Up
+              Sign Up
             </Link>
           </NavItem>
         </Nav>

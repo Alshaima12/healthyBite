@@ -82,28 +82,29 @@ function Meals() {
     <main className="page">
       <section className="page-left">
         {/* Search Box */}
-        <div className="search-box">
-          <input
-            type="text"
-            placeholder="Search meals"
-            value={search}
-            onChange={(e) => setSearch(e.target.value)}
-          />
-          <span className="search-icon">🔍</span>
-        </div>
+        <div className="meals-header-actions">
+          <div className="dropdown">
+            <select
+              value={selectedCategory}
+              onChange={(e) => setSelectedCategory(e.target.value)}
+              style={{ padding: '10px', borderRadius: '8px' }}
+            >
+              <option value="All">All Categories</option>
+              <option value="Salad">Salads</option>
+              <option value="Toast">Toasts</option>
+              <option value="Pasta">Pastas</option>
+            </select>
+          </div>
 
-        {/* Dropdown for Meal Categories */}
-        <div className="dropdown">
-          <select
-            value={selectedCategory}
-            onChange={(e) => setSelectedCategory(e.target.value)}
-            style={{ padding: '10px', borderRadius: '8px' }}
-          >
-            <option value="All">All Categories</option>
-            <option value="Salad">Salads</option>
-            <option value="Toast">Toasts</option>
-            <option value="Pasta">Pastas</option>
-          </select>
+          <div className="search-box">
+            <input
+              type="text"
+              placeholder="Search meals"
+              value={search}
+              onChange={(e) => setSearch(e.target.value)}
+            />
+            <span className="search-icon">🔍</span>
+          </div>
         </div>
 
         <h1 className="section-title center">Healthy Meals</h1>
