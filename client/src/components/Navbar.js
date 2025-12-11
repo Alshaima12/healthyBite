@@ -8,56 +8,90 @@ function NavbarComponent() {
   const { pathname } = useLocation();
   const navigate = useNavigate();
   const dispatch = useDispatch();
+
   const user = useSelector((state) => state.auth.user);
   const cartCount = useSelector((state) =>
-    state.cart.items.reduce((sum, it) => sum + (it.quantity || 0), 0)
+    state.cart.items.reduce((sum, it) => sum + (it.qty || 0), 0)
   );
+
+  const normalizedPath =
+    pathname.endsWith('/') && pathname.length > 1
+      ? pathname.slice(0, -1)
+      : pathname;
 
   const handleLogout = () => {
     dispatch(logout());
     navigate('/login');
   };
 
-  const normalizedPath = pathname.replace(/\/$/, ''); 
+  const classFor = (to) => (to === normalizedPath ? 'active nav-link' : 'nav-link');
 
-  // Define links per page
-  const pageLinks = {
-    '/welcome': ['Menu', 'Profile', 'Logout'],
-    '/menu': ['Home', 'Profile', 'Logout'],
-    '/meals': ['Home', 'Menu', 'Cart', 'Profile', 'Logout'],
-    '/drinks': ['Home', 'Menu', 'Cart', 'Profile', 'Logout'],
-    '/cart': ['Home', 'Menu', 'Logout'],
-    '/order-complete': ['Home', 'Profile', 'Logout'],
-    '/order-receipt': ['Home', 'Logout'],
-    '/profile': ['Home', 'Menu', 'Logout'],
-  };
+  const getLinks = () => {
+    if (!user) {
+      return [
+        { label: 'About Us', to: '/about' },
+        { label: 'Login', to: '/login' },
+        { label: 'Sign Up', to: '/signup' },
+      ];
+    }
 
-  const links = pageLinks[normalizedPath] || ['Home', 'Menu', 'Cart', 'Profile', 'Logout'];
-
-  const renderLink = (label) => {
-    switch (label) {
-      case 'Home':
-        return <Link to="/welcome">{label}</Link>;
-      case 'Menu':
-        return <Link to="/menu">{label}</Link>;
-      case 'Cart':
-        return (
-          <Link to="/cart">
-            {label} {cartCount > 0 && <Badge color="light">{cartCount}</Badge>}
-          </Link>
-        );
-      case 'Profile':
-        return <Link to="/profile">{label}</Link>;
-      case 'Logout':
-        return (
-          <Button color="link" className="nav-link nav-btn" onClick={handleLogout}>
-            {label}
-          </Button>
-        );
+    switch (normalizedPath) {
+      case '/welcome':
+        return [
+          { label: 'Menu', to: '/menu' },
+          { label: 'Profile', to: '/profile' },
+          { label: 'Logout', action: 'logout' },
+        ];
+      case '/menu':
+        return [
+          { label: 'Home', to: '/welcome' },
+          { label: 'Profile', to: '/profile' },
+          { label: 'Logout', action: 'logout' },
+        ];
+      case '/cart':
+        return [
+          { label: 'Home', to: '/welcome' },
+          { label: 'Menu', to: '/menu' },
+          { label: 'Logout', action: 'logout' },
+        ];
+      case '/meals':
+      case '/drinks':
+        return [
+          { label: 'Home', to: '/welcome' },
+          { label: 'Menu', to: '/menu' },
+          { label: 'Cart', to: '/cart' },
+          { label: 'Profile', to: '/profile' },
+          { label: 'Logout', action: 'logout' },
+        ];
+      case '/order-complete':
+        return [
+          { label: 'Home', to: '/welcome' },
+          { label: 'Profile', to: '/profile' },
+          { label: 'Logout', action: 'logout' },
+        ];
+      case '/order-receipt':
+        return [
+          { label: 'Home', to: '/welcome' },
+          { label: 'Logout', action: 'logout' },
+        ];
+      case '/profile':
+        return [
+          { label: 'Home', to: '/welcome' },
+          { label: 'Menu', to: '/menu' },
+          { label: 'Logout', action: 'logout' },
+        ];
       default:
-        return null;
+        return [
+          { label: 'Home', to: '/welcome' },
+          { label: 'Menu', to: '/menu' },
+          { label: 'Cart', to: '/cart' },
+          { label: 'Profile', to: '/profile' },
+          { label: 'Logout', action: 'logout' },
+        ];
     }
   };
+
+  const links = getLinks();
 
   return (
     <Navbar className="navbar" expand="md">
@@ -67,8 +101,28 @@ function NavbarComponent() {
       </div>
 
       <Nav className="nav-right" navbar>
-        {links.map((label) => (
-          <NavItem key={label}>{renderLink(label)}</NavItem>
+        {links.map((link) => (
+          <NavItem key={link.label}>
+            {link.action === 'logout' ? (
+              <Button
+                color="link"
+                className="nav-link nav-btn"
+                onClick={handleLogout}
+              >
+                {link.label}
+              </Button>
+            ) : (
+              <Link to={link.to} className={classFor(link.to)}>
+                {link.label === 'Cart' && cartCount > 0 ? (
+                  <>
+                    Cart <Badge color="light">{cartCount}</Badge>
+                  </>
+                ) : (
+                  link.label
+                )}
+              </Link>
+            )}
+          </NavItem>
         ))}
       </Nav>
     </Navbar>
