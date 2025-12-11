@@ -111,7 +111,10 @@ h3,
   /* green panel */
   display: flex;
   align-items: center;
-  justify-content: center;
+  justify-content: flex-start;
+  /* IMPORTANT: Align to start to handle straddle */
+  position: relative;
+  /* Remove right padding to allow straddling image to sit on the line */
 }
 
 .hero-content h1 {
@@ -136,6 +139,10 @@ h3,
   display: flex;
   align-items: center;
   justify-content: center;
+  /* Straddle the line */
+  margin-left: -130px;
+  /* Half of width */
+  z-index: 10;
 }
 
 .circle-image img {

@@ -13,13 +13,68 @@ function NavbarComponent() {
     state.cart.items.reduce((sum, it) => sum + it.qty, 0)
   );
 
-  const classFor = (path) =>
-    pathname === path ? 'nav-link nav-link-active' : 'nav-link';
+  const getLinks = () => {
+    if (!user) {
+      return [
+        { label: 'About Us', to: '/about' },
+        { label: 'Login', to: '/login' },
+        { label: 'Sign Up', to: '/signup' },
+      ];
+    }
 
-  const handleLogout = () => {
-    dispatch(logout());
-    navigate('/');
+    switch (pathname) {
+      case '/welcome':
+        return [
+          { label: 'Menu', to: '/menu' },
+          { label: 'Profile', to: '/profile' },
+          { label: 'Logout', action: 'logout' },
+        ];
+      case '/menu':
+        return [
+          { label: 'Home', to: '/welcome' },
+          { label: 'Profile', to: '/profile' },
+          { label: 'Logout', action: 'logout' },
+        ];
+      case '/cart':
+        return [
+          { label: 'Home', to: '/welcome' },
+          { label: 'Menu', to: '/menu' },
+          { label: 'Logout', action: 'logout' },
+        ];
+      case '/meals':
+      case '/drinks':
+        return [
+          { label: 'Home', to: '/welcome' },
+          { label: 'Menu', to: '/menu' },
+          { label: 'Cart', to: '/cart' },
+          { label: 'Profile', to: '/profile' },
+          { label: 'Logout', action: 'logout' },
+        ];
+      case '/order-complete':
+      case '/order-receipt':
+        return [
+          { label: 'Home', to: '/welcome' },
+          { label: 'Profile', to: '/profile' },
+          { label: 'Logout', action: 'logout' },
+        ];
+      case '/profile':
+        return [
+          { label: 'Home', to: '/welcome' },
+          { label: 'Menu', to: '/menu' },
+          { label: 'Logout', action: 'logout' },
+        ];
+      default:
+        return [
+          { label: 'Home', to: '/welcome' },
+          { label: 'Menu', to: '/menu' },
+          { label: 'Cart', to: '/cart' },
+          { label: 'Profile', to: '/profile' },
+          { label: 'Logout', action: 'logout' },
+        ];
+    }
   };
+
+  const links = getLinks();
 
   return (
     <Navbar className="navbar" expand="md">
@@ -28,57 +83,29 @@ function NavbarComponent() {
         <span className="logo-main">HealthyBite</span>
       </div>
 
-      {!user ? (
-        <Nav className="nav-right" navbar>
-          <NavItem>
-            <Link to="/about" className={classFor('/about')}>
-              About Us
-            </Link>
+      <Nav className="nav-right" navbar>
+        {links.map((link) => (
+          <NavItem key={link.label}>
+            {link.action === 'logout' ? (
+              <Button
+                color="link"
+                className="nav-link nav-btn"
+                onClick={handleLogout}
+              >
+                {link.label}
+              </Button>
+            ) : (
+              <Link to={link.to} className={classFor(link.to)}>
+                {link.label === 'Cart' && cartCount > 0 ? (
+                  <>Cart <Badge color="light">{cartCount}</Badge></>
+                ) : (
+                  link.label
+                )}
+              </Link>
+            )}
           </NavItem>
-          <NavItem>
-            <Link to="/login" className={classFor('/login')}>
-              Login
-            </Link>
-          </NavItem>
-          <NavItem>
-            <Link to="/signup" className={classFor('/signup')}>
-              Sign Up
-            </Link>
-          </NavItem>
-        </Nav>
-      ) : (
-        <Nav className="nav-right" navbar>
-          <NavItem>
-            <Link to="/welcome" className={classFor('/welcome')}>
-              Home
-            </Link>
-          </NavItem>
-          <NavItem>
-            <Link to="/menu" className={classFor('/menu')}>
-              Menu
-            </Link>
-          </NavItem>
-          <NavItem>
-            <Link to="/cart" className={classFor('/cart')}>
-              Cart {cartCount > 0 && <Badge color="light">{cartCount}</Badge>}
-            </Link>
-          </NavItem>
-          <NavItem>
-            <Link to="/profile" className={classFor('/profile')}>
-              Profile
-            </Link>
-          </NavItem>
-          <NavItem>
-            <Button
-              color="link"
-              className="nav-link nav-btn"
-              onClick={handleLogout}
-            >
-              Logout
-            </Button>
-          </NavItem>
-        </Nav>
-      )}
+        ))}
+      </Nav>
     </Navbar>
   );
 }

@@ -215,6 +215,10 @@ function Drinks() {
           ))}
         </div>
       </section>
+
+      <section className="page-right">
+        {/* Consistent green panel */}
+      </section>
     </main>
   );
 }

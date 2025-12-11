@@ -123,6 +123,10 @@ function Cart() {
           </>
         )}
       </section>
+
+      <section className="page-right">
+        {/* Empty green panel as per consistency requirement, or add image if desired */}
+      </section>
     </main>
   );
 }

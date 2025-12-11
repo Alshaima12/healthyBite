@@ -104,8 +104,8 @@ function OrderComplete() {
   };
 
   return (
-    <main className="order-complete-container">
-      <section className="order-complete-left">
+    <main className="page">
+      <section className="page-left">
         <h2 className="order-complete-header">Order Complete Successfully!</h2>
 
         {/* Location Status */}
@@ -186,7 +186,7 @@ function OrderComplete() {
 
       </section>
 
-      <section className="order-complete-right">
+      <section className="page-right">
         <div className="circle-image">
           <img src={salad} alt="Healthy bowl" />
         </div>
