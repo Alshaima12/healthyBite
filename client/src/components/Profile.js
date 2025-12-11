@@ -38,7 +38,15 @@ function Profile() {
   // Handle input field changes
   const handleChange = (e) => {
     const { name, value } = e.target;
-    setForm((prev) => ({ ...prev, [name]: value }));
+
+    if (name === 'name') {
+      // Allow only letters and spaces
+      if (/^[A-Za-z\s]*$/.test(value)) {
+        setForm((prev) => ({ ...prev, [name]: value }));
+      }
+    } else {
+      setForm((prev) => ({ ...prev, [name]: value }));
+    }
   };
 
   // Validate the form data
@@ -47,13 +55,19 @@ function Profile() {
       return 'Name, email, phone, and gender are required.';
     }
 
-    const phoneRegex = /^[97][0-9]{7}$/;
-    if (!phoneRegex.test(form.phone)) {
-      setError('Phone number must start with 9 or 7 and be exactly 8 digits.');
-      return;
+    // Name validation (letters and spaces only)
+    const nameRegex = /^[A-Za-z\s]+$/;
+    if (!nameRegex.test(form.name)) {
+      return 'Full name can only contain letters and spaces.';
     }
 
-    return '';
+    // Phone validation (starts with 9 or 7, 8 digits)
+    const phoneRegex = /^[97][0-9]{7}$/;
+    if (!phoneRegex.test(form.phone)) {
+      return 'Phone number must start with 9 or 7 and be exactly 8 digits.';
+    }
+
+    return ''; // Valid
   };
 
   // Handle form submission
@@ -76,28 +90,26 @@ function Profile() {
     try {
       setLoading(true);
 
-      console.log('Submitting data:', { uid: user._id, name: form.name, email: form.email, phone: form.phone, pic: form.pic, gender: form.gender });
-
       const res = await axios.post('https://healthybite.onrender.com/updateProfile', {
-        uid: user._id, // Ensure user._id is passed correctly
+        uid: user._id,
         name: form.name,
         email: form.email,
         phone: form.phone,
-        pic: form.pic, // Ensure the image URL or base64 is passed correctly
-        gender: form.gender, // Pass the gender to backend
+        pic: form.pic,
+        gender: form.gender,
       });
 
       setMessage(res.data.msg || 'Profile updated.');
 
-      // Update Redux state and frontend form with the new user data
+      // Update Redux state and frontend form with new user data
       if (res.data.user) {
-        dispatch(loginSuccess(res.data.user)); // Update Redux store with new user data
+        dispatch(loginSuccess(res.data.user));
         setForm({
           name: res.data.user.name,
           email: res.data.user.email,
           phone: res.data.user.phone,
           pic: res.data.user.pic,
-          gender: res.data.user.gender, // Update gender
+          gender: res.data.user.gender,
         });
       }
 
@@ -113,7 +125,6 @@ function Profile() {
       <section className="page-left form-left">
         <h1 className="form-title">My Profile</h1>
 
-        {/* Display user profile info */}
         {user && (
           <div className="user-summary-card">
             <div className="profile-img">
@@ -126,11 +137,9 @@ function Profile() {
           </div>
         )}
 
-        {/* Display error or success messages */}
         {error && <Alert color="danger">{error}</Alert>}
         {message && <Alert color="success">{message}</Alert>}
 
-        {/* Profile Update Form */}
         <Form className="form" onSubmit={handleSubmit}>
           <FormGroup>
             <Input
@@ -170,7 +179,7 @@ function Profile() {
             />
           </FormGroup>
 
-          {/* Gender Selection - Using Checkboxes (Single Selection Logic) */}
+          {/* Gender Selection */}
           <div className="gender-selection">
             <Label check>
               <Input
@@ -200,7 +209,6 @@ function Profile() {
         </Form>
       </section>
 
-      {/* Profile image and background */}
       <section className="page-right">
         <div className="circle-image">
           <img src={salad} alt="Profile Background" />

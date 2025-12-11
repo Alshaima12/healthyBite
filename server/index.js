@@ -138,44 +138,64 @@ app.get('/getProfiles', async (req, res) => {
 });
 
 // =================== Update User ===================
-app.post('/updateProfile', async (req, res) => {
+app.post('/updateProfile', async (req, res) => { 
   try {
     const { uid, name, email, phone, pic, gender } = req.body;
 
+    // 1) Basic validation
     if (!uid || !name || !email || !phone || !gender) {
       return res.status(400).json({ msg: 'All fields are required.' });
     }
 
+    // 2) Name validation (letters and spaces only)
+    const nameRegex = /^[A-Za-z\s]+$/;
+    if (!nameRegex.test(name)) {
+      return res.status(400).json({ msg: 'Full name can only contain letters and spaces.' });
+    }
+
+    // 3) Phone validation (must start with 9 or 7, 8 digits)
+    const phoneRegex = /^[97][0-9]{7}$/;
+    if (!phoneRegex.test(phone)) {
+      return res.status(400).json({
+        msg: 'Phone number must start with 9 or 7 and be exactly 8 digits.',
+      });
+    }
+
+    // 4) Fetch user
     const user = await UserModel.findById(uid);
     if (!user) {
       return res.status(404).json({ msg: 'User not found.' });
     }
 
+    // 5) Update user fields
     user.name = name;
     user.email = email;
     user.phone = String(phone);
-    user.gender = gender;  // Save gender field in the database
+    user.gender = gender;
     if (typeof pic === 'string') {
       user.pic = pic;
     }
 
     await user.save();
 
+    // 6) Return safe user info
     const userSafe = {
       _id: user._id,
       name: user.name,
       email: user.email,
       phone: user.phone,
       pic: user.pic,
-      gender: user.gender,  // Include gender in the response
+      gender: user.gender,
     };
 
     res.json({ user: userSafe, msg: 'Profile updated.' });
+
   } catch (error) {
     console.error('Update profile error:', error);
     res.status(500).json({ msg: 'Server error.' });
   }
 });
+
 
 
 
