@@ -9,6 +9,7 @@ function OrderComplete() {
 
   const [userLocation, setUserLocation] = useState(null);
   const [distance, setDistance] = useState(null);
+  const [estimatedTime, setEstimatedTime] = useState(null);
   const [locationError, setLocationError] = useState(null);
   const [loadingLocation, setLoadingLocation] = useState(true);
 
@@ -58,6 +59,12 @@ function OrderComplete() {
           );
 
           setDistance(dist);
+
+          // Calculate estimated time assumed average speed is 40 km/h
+          // Time (minutes) = (Distance (km) / Speed (km/h)) * 60
+          const timeDetails = (dist / 40) * 60;
+          setEstimatedTime(timeDetails);
+
           setLoadingLocation(false);
         },
         (error) => {
@@ -82,7 +89,7 @@ function OrderComplete() {
         },
         {
           enableHighAccuracy: true,
-          timeout: 10000,
+          timeout: 60000, // Increased timeout to 60 seconds
           maximumAge: 0
         }
       );
@@ -122,6 +129,9 @@ function OrderComplete() {
             </h3>
             <p style={{ margin: '5px 0', fontSize: '16px', fontWeight: '600', color: '#2f8b4b' }}>
               Distance to restaurant: {distance.toFixed(2)} km
+            </p>
+            <p style={{ margin: '5px 0', fontSize: '16px', fontWeight: '600', color: '#2f8b4b' }}>
+              Estimated time: {Math.ceil(estimatedTime)} min
             </p>
             <p style={{ margin: '5px 0', fontSize: '14px', color: '#555' }}>
               Your location: {userLocation.lat.toFixed(6)}, {userLocation.lng.toFixed(6)}
