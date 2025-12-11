@@ -94,19 +94,34 @@ h3,
 
 /* PAGE LAYOUT */
 
+/* Make navbar text visible on green background only */
+.navbar {
+  background: linear-gradient(to right, #ffffff 65%, #8ec09b 65%);
+}
+
+.nav-left .logo-main {
+  color: #295237;
+}
+
+.nav-right .nav-link {
+  color: #ffffff;
+}
+
+/* PAGE LAYOUT */
+
 .page {
   display: flex;
   min-height: calc(100vh - 70px);
 }
 
 .page-left {
-  flex: 3;
+  flex: 65;
   padding: 80px 70px;
   background-color: #ffffff;
 }
 
 .page-right {
-  flex: 2;
+  flex: 35;
   background-color: #8ec09b;
   /* green panel */
   display: flex;
@@ -224,10 +239,7 @@ h3,
 }
 
 /* Make navbar text visible on green background only */
-.navbar {
-  background: linear-gradient(to right, #ffffff 60%, #8ec09b 60%);
-}
-
+/* .navbar definition moved up, ensuring no conflict */
 .nav-left .logo-main {
   color: #295237;
 }

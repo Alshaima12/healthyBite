@@ -3,6 +3,8 @@ import { useDispatch } from 'react-redux';
 import { addToCart } from '../slices/cartSlice';
 import useRequireAuth from '../hooks/useRequireAuth';
 
+import useRequireAuth from '../hooks/useRequireAuth';
+import salad from "../images/salad-illustration.png";
 import meal1 from "../images/meal1.png";
 import meal2 from "../images/meal2.png";
 import meal3 from "../images/meal3.png";
@@ -158,7 +160,9 @@ function Meals() {
       </section>
 
       <section className="page-right">
-        {/* Consistent green panel */}
+        <div className="circle-image">
+          <img src={salad} alt="Healthy bowl" />
+        </div>
       </section>
     </main>
   );

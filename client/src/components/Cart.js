@@ -6,6 +6,7 @@ import { useNavigate } from 'react-router-dom';
 import useRequireAuth from '../hooks/useRequireAuth';
 import axios from 'axios';
 import fallbackImg from '../images/meal1.png';
+import salad from "../images/salad-illustration.png";
 
 function Cart() {
   const user = useRequireAuth(); // ensure logged-in
@@ -125,7 +126,9 @@ function Cart() {
       </section>
 
       <section className="page-right">
-        {/* Empty green panel as per consistency requirement, or add image if desired */}
+        <div className="circle-image">
+          <img src={salad} alt="Healthy bowl" />
+        </div>
       </section>
     </main>
   );

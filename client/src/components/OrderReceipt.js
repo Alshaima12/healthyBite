@@ -1,5 +1,6 @@
 import React from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
+import salad from "../images/salad-illustration.png";
 
 
 function OrderReceipt() {
@@ -16,37 +17,44 @@ function OrderReceipt() {
     }
 
     return (
-        <div className="order-receipt-container">
-            <div className="order-receipt-header">
-                <h1>Order Receipt</h1>
-            </div>
+        <main className="page">
+            <section className="page-left">
+                <div className="order-receipt-header">
+                    <h1 style={{ textAlign: 'center', color: '#295237' }}>Order Receipt</h1>
+                </div>
 
-            <div className="customer-info">
-                <h2>Customer Details</h2>
-                <p><strong>Name:</strong> {orderDetails.customer.name}</p>
-                <p><strong>Email:</strong> {orderDetails.customer.email}</p>
-                <p><strong>Phone:</strong> {orderDetails.customer.phone}</p>
-            </div>
+                <div className="customer-info">
+                    <h2>Customer Details</h2>
+                    <p><strong>Name:</strong> {orderDetails.customer.name}</p>
+                    <p><strong>Email:</strong> {orderDetails.customer.email}</p>
+                    <p><strong>Phone:</strong> {orderDetails.customer.phone}</p>
+                </div>
 
-            <div className="order-items">
-                <h2>Order Items</h2>
-                <ul>
-                    {orderDetails.items.map((item) => (
-                        <li key={item.productId}>
-                            <p>{item.name} x {item.qty} - {item.price} OR</p>
-                        </li>
-                    ))}
-                </ul>
-            </div>
+                <div className="order-items">
+                    <h2>Order Items</h2>
+                    <ul>
+                        {orderDetails.items.map((item) => (
+                            <li key={item.productId || item.id}>
+                                <p>{item.name} x {item.qty} - {item.price} OR</p>
+                            </li>
+                        ))}
+                    </ul>
+                </div>
 
-            <div className="total-amount">
-                <h2><strong>Total Amount:</strong> {orderDetails.totalAmount} OR</h2>
-            </div>
+                <div className="total-amount">
+                    <h2><strong>Total Amount:</strong> {orderDetails.totalAmount} OR</h2>
+                </div>
 
-            {/* Next Page Button */}
+                {/* Next Page Button */}
                 <button className="primary-btn" onClick={handleNextPage}>Continue</button>
-     
-        </div>
+            </section>
+
+            <section className="page-right">
+                <div className="circle-image">
+                    <img src={salad} alt="Healthy bowl" />
+                </div>
+            </section>
+        </main>
     );
 }
 
