@@ -92,11 +92,10 @@ body {
 /* CIRCLE IMAGE */
 
 .circle-image {
-  width: 260px;
-  height: 260px;
+  width: 500px;
+  height: 500px;
   border-radius: 50%;
   background-color: #f6f1e8;
-  border: 4px solid #295237;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -104,6 +103,7 @@ body {
 
 .circle-image img {
   max-width: 80%;
+  height: auto;
 }
 
 /* ABOUT PAGE */

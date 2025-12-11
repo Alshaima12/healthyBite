@@ -29,6 +29,11 @@ function Signup() {
       return 'All fields are required.';
     }
 
+    const nameRegex = /^[A-Za-z\s]+$/;
+    if (!nameRegex.test(form.name)) {
+      return 'Full name can only contain letters and spaces.';
+    }
+
     const phoneRegex = /^[97][0-9]{7}$/;
     if (!phoneRegex.test(form.phone)) {
       return 'Phone number must start with 9 or 7 and be exactly 8 digits.';

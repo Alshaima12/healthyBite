@@ -22,29 +22,29 @@ mongoose
   .catch((err) => console.error('MongoDB error:', err));
 
 
-// =================== Registration ===================
 app.post('/registerUser', async (req, res) => {
   try {
     const { name, email, phone, password, pic, gender } = req.body;
 
     // 1) Basic validation
     if (!name || !email || !phone || !password || !gender) {
-      return res.status(400).json({ msg: 'All fields are required.' });
+      return  'All fields are required.';
+    }
+    // 1a) Name validation (letters and spaces only)
+    const nameRegex = /^[A-Za-z\s]+$/;
+    if (!nameRegex.test(name)) {
+      return  'Full name can only contain letters and spaces.' ;
     }
 
     // 2) Phone validation (must start with 9 or 7, and be 8 digits)
     const phoneRegex = /^[97][0-9]{7}$/;
     if (!phoneRegex.test(phone)) {
-      return res.status(400).json({
-        msg: 'Phone number must start with 9 or 7 and be exactly 8 digits.',
-      });
+      return 'Phone number must start with 9 or 7 and be exactly 8 digits.';
     }
 
     // 3) Password validation
     if (password.length < 6) {
-      return res.status(400).json({
-        msg: 'Password must be at least 6 characters.',
-      });
+      return  'Password must be at least 6 characters.';
     }
 
     // 4) Check if email already exists
@@ -60,22 +60,22 @@ app.post('/registerUser', async (req, res) => {
     const user = new UserModel({
       name,
       email,
-      phone: String(phone), // ensure stored as string
+      phone: String(phone),
       password: hpassword,
       pic: pic || '',
-      gender, // Save gender
+      gender,
     });
 
     await user.save();
 
-    // Return safe user info (without password)
+    // Return safe user info
     const userSafe = {
       _id: user._id,
       name: user.name,
       email: user.email,
       phone: user.phone,
       pic: user.pic,
-      gender: user.gender, // Send gender back in the response
+      gender: user.gender,
     };
 
     res.status(201).json({ user: userSafe, msg: 'User registered.' });
