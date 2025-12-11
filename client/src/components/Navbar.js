@@ -18,7 +18,7 @@ function NavbarComponent() {
     navigate('/login');
   };
 
-  const normalizedPath = pathname.replace(/\/$/, ''); // remove trailing slash
+  const normalizedPath = pathname.replace(/\/$/, ''); 
 
   // Define links per page
   const pageLinks = {
