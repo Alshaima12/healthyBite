@@ -115,7 +115,7 @@ function NavbarComponent() {
               <Link to={link.to} className={classFor(link.to)}>
                 {link.label === 'Cart' && cartCount > 0 ? (
                   <>
-                    Cart <Badge color="light">{cartCount}</Badge>
+                    Cart <Badge color="light" style={{ color: 'green' }}>{cartCount}</Badge>
                   </>
                 ) : (
                   link.label

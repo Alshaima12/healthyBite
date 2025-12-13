@@ -62,6 +62,7 @@ function Login() {
               placeholder="Enter your Email"
               value={remail}
               onChange={(e) => setRemail(e.target.value)}
+              data-testid="email"
             />
           </FormGroup>
           <FormGroup>
@@ -70,6 +71,7 @@ function Login() {
               placeholder="Enter your Password"
               value={rpassword}
               onChange={(e) => setRpassword(e.target.value)}
+              data-testid="password"
             />
           </FormGroup>
           <Button

@@ -1,0 +1,75 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Login Component Tests Match the UI of Login.js - snapshot 1`] = `
+<div>
+  <main
+    class="page"
+  >
+    <section
+      class="page-left form-left"
+    >
+      <h1
+        class="form-title"
+      >
+        Login to your Account
+      </h1>
+      <form
+        class="form"
+      >
+        <div
+          class="mb-3"
+        >
+          <input
+            class="form-control"
+            data-testid="email"
+            placeholder="Enter your Email"
+            type="email"
+            value=""
+          />
+        </div>
+        <div
+          class="mb-3"
+        >
+          <input
+            class="form-control"
+            data-testid="password"
+            placeholder="Enter your Password"
+            type="password"
+            value=""
+          />
+        </div>
+        <button
+          class="primary-btn btn btn-secondary d-block w-100"
+          type="submit"
+        >
+          Login
+        </button>
+      </form>
+      <p
+        class="form-footer"
+      >
+        Don't have an account?
+         
+        <a
+          class="link-text"
+          href="/signup"
+        >
+          Sign Up
+        </a>
+      </p>
+    </section>
+    <section
+      class="page-right"
+    >
+      <div
+        class="circle-image"
+      >
+        <img
+          alt="Healthy food"
+          src="salad-image-stub"
+        />
+      </div>
+    </section>
+  </main>
+</div>
+`;
